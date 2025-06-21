@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -19,7 +19,7 @@ namespace ImGuiNET
         public static implicit operator ImGuiSelectionExternalStorage* (ImGuiSelectionExternalStoragePtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiSelectionExternalStoragePtr(IntPtr nativePtr) => new ImGuiSelectionExternalStoragePtr(nativePtr);
         public IntPtr UserData { get => (IntPtr)NativePtr->UserData; set => NativePtr->UserData = (void*)value; }
-        public ref IntPtr AdapterSetItemSelected => ref Unsafe.AsRef<IntPtr>(&NativePtr->AdapterSetItemSelected);
+        public ref IntPtr AdapterSetItemSelected => ref NativePtr->AdapterSetItemSelected;
         public void ApplyRequests(ImGuiMultiSelectIOPtr ms_io)
         {
             ImGuiMultiSelectIO* native_ms_io = ms_io.NativePtr;

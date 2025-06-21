@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -37,24 +37,28 @@ namespace ImGuiNET
         public static implicit operator ImFont* (ImFontPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImFontPtr(IntPtr nativePtr) => new ImFontPtr(nativePtr);
         public ImVector<float> IndexAdvanceX => new ImVector<float>(NativePtr->IndexAdvanceX);
-        public ref float FallbackAdvanceX => ref Unsafe.AsRef<float>(&NativePtr->FallbackAdvanceX);
-        public ref float FontSize => ref Unsafe.AsRef<float>(&NativePtr->FontSize);
+        public ref float FallbackAdvanceX => ref NativePtr->FallbackAdvanceX;
+        public ref float FontSize => ref NativePtr->FontSize;
         public ImVector<ushort> IndexLookup => new ImVector<ushort>(NativePtr->IndexLookup);
-        public ImPtrVector<ImFontGlyphPtr> Glyphs => new ImPtrVector<ImFontGlyphPtr>(NativePtr->Glyphs, Unsafe.SizeOf<ImFontGlyph>());
+        public ImPtrVector<ImFontGlyphPtr> Glyphs => new ImPtrVector<ImFontGlyphPtr>(NativePtr->Glyphs, sizeof(ImFontGlyph));
         public ImFontGlyphPtr FallbackGlyph => new ImFontGlyphPtr(NativePtr->FallbackGlyph);
         public ImFontAtlasPtr ContainerAtlas => new ImFontAtlasPtr(NativePtr->ContainerAtlas);
         public ImFontConfigPtr ConfigData => new ImFontConfigPtr(NativePtr->ConfigData);
-        public ref short ConfigDataCount => ref Unsafe.AsRef<short>(&NativePtr->ConfigDataCount);
-        public ref short EllipsisCharCount => ref Unsafe.AsRef<short>(&NativePtr->EllipsisCharCount);
-        public ref ushort EllipsisChar => ref Unsafe.AsRef<ushort>(&NativePtr->EllipsisChar);
-        public ref ushort FallbackChar => ref Unsafe.AsRef<ushort>(&NativePtr->FallbackChar);
-        public ref float EllipsisWidth => ref Unsafe.AsRef<float>(&NativePtr->EllipsisWidth);
-        public ref float EllipsisCharStep => ref Unsafe.AsRef<float>(&NativePtr->EllipsisCharStep);
-        public ref bool DirtyLookupTables => ref Unsafe.AsRef<bool>(&NativePtr->DirtyLookupTables);
-        public ref float Scale => ref Unsafe.AsRef<float>(&NativePtr->Scale);
-        public ref float Ascent => ref Unsafe.AsRef<float>(&NativePtr->Ascent);
-        public ref float Descent => ref Unsafe.AsRef<float>(&NativePtr->Descent);
-        public ref int MetricsTotalSurface => ref Unsafe.AsRef<int>(&NativePtr->MetricsTotalSurface);
+        public ref short ConfigDataCount => ref NativePtr->ConfigDataCount;
+        public ref short EllipsisCharCount => ref NativePtr->EllipsisCharCount;
+        public ref ushort EllipsisChar => ref NativePtr->EllipsisChar;
+        public ref ushort FallbackChar => ref NativePtr->FallbackChar;
+        public ref float EllipsisWidth => ref NativePtr->EllipsisWidth;
+        public ref float EllipsisCharStep => ref NativePtr->EllipsisCharStep;
+        public bool DirtyLookupTables
+        {
+            get => NativePtr->DirtyLookupTables != 0;
+            set => NativePtr->DirtyLookupTables = (byte)(value ? 1 : 0);
+        }
+        public ref float Scale => ref NativePtr->Scale;
+        public ref float Ascent => ref NativePtr->Ascent;
+        public ref float Descent => ref NativePtr->Descent;
+        public ref int MetricsTotalSurface => ref NativePtr->MetricsTotalSurface;
         public RangeAccessor<byte> Used4kPagesMap => new RangeAccessor<byte>(NativePtr->Used4kPagesMap, 2);
         public void AddGlyph(ImFontConfigPtr src_cfg, ushort c, float x0, float y0, float x1, float y1, float u0, float v0, float u1, float v1, float advance_x)
         {

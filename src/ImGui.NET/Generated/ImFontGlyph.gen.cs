@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -28,17 +28,17 @@ namespace ImGuiNET
         public static implicit operator ImFontGlyphPtr(ImFontGlyph* nativePtr) => new ImFontGlyphPtr(nativePtr);
         public static implicit operator ImFontGlyph* (ImFontGlyphPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImFontGlyphPtr(IntPtr nativePtr) => new ImFontGlyphPtr(nativePtr);
-        public ref uint Colored => ref Unsafe.AsRef<uint>(&NativePtr->Colored);
-        public ref uint Visible => ref Unsafe.AsRef<uint>(&NativePtr->Visible);
-        public ref uint Codepoint => ref Unsafe.AsRef<uint>(&NativePtr->Codepoint);
-        public ref float AdvanceX => ref Unsafe.AsRef<float>(&NativePtr->AdvanceX);
-        public ref float X0 => ref Unsafe.AsRef<float>(&NativePtr->X0);
-        public ref float Y0 => ref Unsafe.AsRef<float>(&NativePtr->Y0);
-        public ref float X1 => ref Unsafe.AsRef<float>(&NativePtr->X1);
-        public ref float Y1 => ref Unsafe.AsRef<float>(&NativePtr->Y1);
-        public ref float U0 => ref Unsafe.AsRef<float>(&NativePtr->U0);
-        public ref float V0 => ref Unsafe.AsRef<float>(&NativePtr->V0);
-        public ref float U1 => ref Unsafe.AsRef<float>(&NativePtr->U1);
-        public ref float V1 => ref Unsafe.AsRef<float>(&NativePtr->V1);
+        public ref uint Colored => ref NativePtr->Colored;
+        public ref uint Visible => ref NativePtr->Visible;
+        public ref uint Codepoint => ref NativePtr->Codepoint;
+        public ref float AdvanceX => ref NativePtr->AdvanceX;
+        public ref float X0 => ref NativePtr->X0;
+        public ref float Y0 => ref NativePtr->Y0;
+        public ref float X1 => ref NativePtr->X1;
+        public ref float Y1 => ref NativePtr->Y1;
+        public ref float U0 => ref NativePtr->U0;
+        public ref float V0 => ref NativePtr->V0;
+        public ref float U1 => ref NativePtr->U1;
+        public ref float V1 => ref NativePtr->V1;
     }
 }

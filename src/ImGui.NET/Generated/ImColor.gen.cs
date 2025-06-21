@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -17,7 +17,7 @@ namespace ImGuiNET
         public static implicit operator ImColorPtr(ImColor* nativePtr) => new ImColorPtr(nativePtr);
         public static implicit operator ImColor* (ImColorPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImColorPtr(IntPtr nativePtr) => new ImColorPtr(nativePtr);
-        public ref Vector4 Value => ref Unsafe.AsRef<Vector4>(&NativePtr->Value);
+        public ref SlimDX.Vector4 Value => ref NativePtr->Value;
         public void Destroy()
         {
             ImGuiNative.ImColor_destroy((ImColor*)(NativePtr));

@@ -1,82 +1,90 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 
-namespace ImGuiNET
+public unsafe struct ImVector
 {
-    public unsafe struct ImVector
+    public readonly int Size;
+    public readonly int Capacity;
+    public readonly IntPtr Data;
+
+    public ImVector(int size, int capacity, IntPtr data)
     {
-        public readonly int Size;
-        public readonly int Capacity;
-        public readonly IntPtr Data;
-
-        public ImVector(int size, int capacity, IntPtr data)
-        {
-            Size = size;
-            Capacity = capacity;
-            Data = data;
-        }
-
-        public ref T Ref<T>(int index)
-        {
-            return ref Unsafe.AsRef<T>((byte*)Data + index * Unsafe.SizeOf<T>());
-        }
-
-        public IntPtr Address<T>(int index)
-        {
-            return (IntPtr)((byte*)Data + index * Unsafe.SizeOf<T>());
-        }
+        Size = size;
+        Capacity = capacity;
+        Data = data;
     }
 
-    public unsafe struct ImVector<T>
+    public ref T Ref<T>(int index) where T : unmanaged
     {
-        public readonly int Size;
-        public readonly int Capacity;
-        public readonly IntPtr Data;
-
-        public ImVector(ImVector vector)
-        {
-            Size = vector.Size;
-            Capacity = vector.Capacity;
-            Data = vector.Data;
-        }
-
-        public ImVector(int size, int capacity, IntPtr data)
-        {
-            Size = size;
-            Capacity = capacity;
-            Data = data;
-        }
-
-        public ref T this[int index] => ref Unsafe.AsRef<T>((byte*)Data + index * Unsafe.SizeOf<T>());
+        if (index < 0 || index >= Size) throw new IndexOutOfRangeException();
+        byte* basePtr = (byte*)Data;
+        return ref *(T*)(basePtr + index * sizeof(T));
     }
 
-    public unsafe struct ImPtrVector<T>
+    public IntPtr Address<T>(int index) where T : unmanaged
     {
-        public readonly int Size;
-        public readonly int Capacity;
-        public readonly IntPtr Data;
-        private readonly int _stride;
+        if (index < 0 || index >= Size) throw new IndexOutOfRangeException();
+        byte* basePtr = (byte*)Data;
+        return (IntPtr)(basePtr + index * sizeof(T));
+    }
+}
 
-        public ImPtrVector(ImVector vector, int stride)
-            : this(vector.Size, vector.Capacity, vector.Data, stride)
-        { }
+public unsafe struct ImVector<T> where T : unmanaged
+{
+    public readonly int Size;
+    public readonly int Capacity;
+    public readonly IntPtr Data;
 
-        public ImPtrVector(int size, int capacity, IntPtr data, int stride)
+    public ImVector(ImVector vector)
+    {
+        Size = vector.Size;
+        Capacity = vector.Capacity;
+        Data = vector.Data;
+    }
+
+    public ImVector(int size, int capacity, IntPtr data)
+    {
+        Size = size;
+        Capacity = capacity;
+        Data = data;
+    }
+
+    public ref T this[int index]
+    {
+        get
         {
-            Size = size;
-            Capacity = capacity;
-            Data = data;
-            _stride = stride;
+            if (index < 0 || index >= Size) throw new IndexOutOfRangeException();
+            byte* basePtr = (byte*)Data;
+            return ref *(T*)(basePtr + index * sizeof(T));
         }
+    }
+}
 
-        public T this[int index]
+public unsafe struct ImPtrVector<T> where T : unmanaged
+{
+    public readonly int Size;
+    public readonly int Capacity;
+    public readonly IntPtr Data;
+    private readonly int _stride;
+
+    public ImPtrVector(ImVector vector, int stride)
+        : this(vector.Size, vector.Capacity, vector.Data, stride)
+    { }
+
+    public ImPtrVector(int size, int capacity, IntPtr data, int stride)
+    {
+        Size = size;
+        Capacity = capacity;
+        Data = data;
+        _stride = stride;
+    }
+
+    public T this[int index]
+    {
+        get
         {
-            get
-            {
-                byte* address = (byte*)Data + index * _stride;
-                T ret = Unsafe.Read<T>(&address);
-                return ret;
-            }
+            if (index < 0 || index >= Size) throw new IndexOutOfRangeException();
+            byte* address = (byte*)Data + index * _stride;
+            return *(T*)address;
         }
     }
 }

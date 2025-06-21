@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -20,8 +20,8 @@ namespace ImGuiNET
         public static implicit operator ImGuiTextFilter* (ImGuiTextFilterPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiTextFilterPtr(IntPtr nativePtr) => new ImGuiTextFilterPtr(nativePtr);
         public RangeAccessor<byte> InputBuf => new RangeAccessor<byte>(NativePtr->InputBuf, 256);
-        public ImPtrVector<ImGuiTextRangePtr> Filters => new ImPtrVector<ImGuiTextRangePtr>(NativePtr->Filters, Unsafe.SizeOf<ImGuiTextRange>());
-        public ref int CountGrep => ref Unsafe.AsRef<int>(&NativePtr->CountGrep);
+        public ImPtrVector<ImGuiTextRangePtr> Filters => new ImPtrVector<ImGuiTextRangePtr>(NativePtr->Filters, sizeof(ImGuiTextRange));
+        public ref int CountGrep => ref NativePtr->CountGrep;
         public void Build()
         {
             ImGuiNative.ImGuiTextFilter_Build((ImGuiTextFilter*)(NativePtr));

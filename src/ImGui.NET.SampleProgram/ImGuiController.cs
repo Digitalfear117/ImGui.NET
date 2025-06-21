@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Numerics;
+using SlimDX;
 using System.Reflection;
 using System.IO;
 using Veldrid;
@@ -39,7 +39,7 @@ namespace ImGuiNET
 
         private int _windowWidth;
         private int _windowHeight;
-        private Vector2 _scaleFactor = Vector2.One;
+        private Vector2 _scaleFactor = new SlimDX.Vector2(1f, 1f);
 
         // Image trackers
         private readonly Dictionary<TextureView, ResourceSetInfo> _setsByView
@@ -459,13 +459,22 @@ namespace ImGuiNET
 
             // Setup orthographic projection matrix into our constant buffer
             ImGuiIOPtr io = ImGui.GetIO();
-            Matrix4x4 mvp = Matrix4x4.CreateOrthographicOffCenter(
+
+            // Using SlimDX.Matrix:
+            float left = 0f;
+            float right = io.DisplaySize.X;   // note: io.DisplaySize is System.Numerics.Vector2 if unchanged
+            float top = 0f;
+            float bottom = io.DisplaySize.Y;
+            float znear = -1f;
+            float zfar = 1f;
+
+            SlimDX.Matrix mvp = SlimDX.Matrix.OrthoOffCenterLH(
                 0f,
                 io.DisplaySize.X,
                 io.DisplaySize.Y,
-                0.0f,
-                -1.0f,
-                1.0f);
+                0f,
+                -1f,
+                1f);
 
             _gd.UpdateBuffer(_projMatrixBuffer, 0, ref mvp);
 

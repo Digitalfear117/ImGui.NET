@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -24,13 +24,13 @@ namespace ImGuiNET
         public static implicit operator ImGuiListClipperPtr(ImGuiListClipper* nativePtr) => new ImGuiListClipperPtr(nativePtr);
         public static implicit operator ImGuiListClipper* (ImGuiListClipperPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiListClipperPtr(IntPtr nativePtr) => new ImGuiListClipperPtr(nativePtr);
-        public ref IntPtr Ctx => ref Unsafe.AsRef<IntPtr>(&NativePtr->Ctx);
-        public ref int DisplayStart => ref Unsafe.AsRef<int>(&NativePtr->DisplayStart);
-        public ref int DisplayEnd => ref Unsafe.AsRef<int>(&NativePtr->DisplayEnd);
-        public ref int ItemsCount => ref Unsafe.AsRef<int>(&NativePtr->ItemsCount);
-        public ref float ItemsHeight => ref Unsafe.AsRef<float>(&NativePtr->ItemsHeight);
-        public ref float StartPosY => ref Unsafe.AsRef<float>(&NativePtr->StartPosY);
-        public ref double StartSeekOffsetY => ref Unsafe.AsRef<double>(&NativePtr->StartSeekOffsetY);
+        public ref IntPtr Ctx => ref NativePtr->Ctx;
+        public ref int DisplayStart => ref NativePtr->DisplayStart;
+        public ref int DisplayEnd => ref NativePtr->DisplayEnd;
+        public ref int ItemsCount => ref NativePtr->ItemsCount;
+        public ref float ItemsHeight => ref NativePtr->ItemsHeight;
+        public ref float StartPosY => ref NativePtr->StartPosY;
+        public ref double StartSeekOffsetY => ref NativePtr->StartSeekOffsetY;
         public IntPtr TempData { get => (IntPtr)NativePtr->TempData; set => NativePtr->TempData = (void*)value; }
         public void Begin(int items_count)
         {

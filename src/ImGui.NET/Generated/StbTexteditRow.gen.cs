@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -22,11 +22,11 @@ namespace ImGuiNET
         public static implicit operator StbTexteditRowPtr(StbTexteditRow* nativePtr) => new StbTexteditRowPtr(nativePtr);
         public static implicit operator StbTexteditRow* (StbTexteditRowPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator StbTexteditRowPtr(IntPtr nativePtr) => new StbTexteditRowPtr(nativePtr);
-        public ref float x0 => ref Unsafe.AsRef<float>(&NativePtr->x0);
-        public ref float x1 => ref Unsafe.AsRef<float>(&NativePtr->x1);
-        public ref float baseline_y_delta => ref Unsafe.AsRef<float>(&NativePtr->baseline_y_delta);
-        public ref float ymin => ref Unsafe.AsRef<float>(&NativePtr->ymin);
-        public ref float ymax => ref Unsafe.AsRef<float>(&NativePtr->ymax);
-        public ref int num_chars => ref Unsafe.AsRef<int>(&NativePtr->num_chars);
+        public ref float x0 => ref NativePtr->x0;
+        public ref float x1 => ref NativePtr->x1;
+        public ref float baseline_y_delta => ref NativePtr->baseline_y_delta;
+        public ref float ymin => ref NativePtr->ymin;
+        public ref float ymax => ref NativePtr->ymax;
+        public ref int num_chars => ref NativePtr->num_chars;
     }
 }

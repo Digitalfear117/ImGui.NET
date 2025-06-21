@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -127,60 +127,72 @@ namespace ImGuiNET
         public static implicit operator ImGuiStylePtr(ImGuiStyle* nativePtr) => new ImGuiStylePtr(nativePtr);
         public static implicit operator ImGuiStyle* (ImGuiStylePtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiStylePtr(IntPtr nativePtr) => new ImGuiStylePtr(nativePtr);
-        public ref float Alpha => ref Unsafe.AsRef<float>(&NativePtr->Alpha);
-        public ref float DisabledAlpha => ref Unsafe.AsRef<float>(&NativePtr->DisabledAlpha);
-        public ref Vector2 WindowPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->WindowPadding);
-        public ref float WindowRounding => ref Unsafe.AsRef<float>(&NativePtr->WindowRounding);
-        public ref float WindowBorderSize => ref Unsafe.AsRef<float>(&NativePtr->WindowBorderSize);
-        public ref Vector2 WindowMinSize => ref Unsafe.AsRef<Vector2>(&NativePtr->WindowMinSize);
-        public ref Vector2 WindowTitleAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->WindowTitleAlign);
-        public ref ImGuiDir WindowMenuButtonPosition => ref Unsafe.AsRef<ImGuiDir>(&NativePtr->WindowMenuButtonPosition);
-        public ref float ChildRounding => ref Unsafe.AsRef<float>(&NativePtr->ChildRounding);
-        public ref float ChildBorderSize => ref Unsafe.AsRef<float>(&NativePtr->ChildBorderSize);
-        public ref float PopupRounding => ref Unsafe.AsRef<float>(&NativePtr->PopupRounding);
-        public ref float PopupBorderSize => ref Unsafe.AsRef<float>(&NativePtr->PopupBorderSize);
-        public ref Vector2 FramePadding => ref Unsafe.AsRef<Vector2>(&NativePtr->FramePadding);
-        public ref float FrameRounding => ref Unsafe.AsRef<float>(&NativePtr->FrameRounding);
-        public ref float FrameBorderSize => ref Unsafe.AsRef<float>(&NativePtr->FrameBorderSize);
-        public ref Vector2 ItemSpacing => ref Unsafe.AsRef<Vector2>(&NativePtr->ItemSpacing);
-        public ref Vector2 ItemInnerSpacing => ref Unsafe.AsRef<Vector2>(&NativePtr->ItemInnerSpacing);
-        public ref Vector2 CellPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->CellPadding);
-        public ref Vector2 TouchExtraPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->TouchExtraPadding);
-        public ref float IndentSpacing => ref Unsafe.AsRef<float>(&NativePtr->IndentSpacing);
-        public ref float ColumnsMinSpacing => ref Unsafe.AsRef<float>(&NativePtr->ColumnsMinSpacing);
-        public ref float ScrollbarSize => ref Unsafe.AsRef<float>(&NativePtr->ScrollbarSize);
-        public ref float ScrollbarRounding => ref Unsafe.AsRef<float>(&NativePtr->ScrollbarRounding);
-        public ref float GrabMinSize => ref Unsafe.AsRef<float>(&NativePtr->GrabMinSize);
-        public ref float GrabRounding => ref Unsafe.AsRef<float>(&NativePtr->GrabRounding);
-        public ref float LogSliderDeadzone => ref Unsafe.AsRef<float>(&NativePtr->LogSliderDeadzone);
-        public ref float TabRounding => ref Unsafe.AsRef<float>(&NativePtr->TabRounding);
-        public ref float TabBorderSize => ref Unsafe.AsRef<float>(&NativePtr->TabBorderSize);
-        public ref float TabMinWidthForCloseButton => ref Unsafe.AsRef<float>(&NativePtr->TabMinWidthForCloseButton);
-        public ref float TabBarBorderSize => ref Unsafe.AsRef<float>(&NativePtr->TabBarBorderSize);
-        public ref float TabBarOverlineSize => ref Unsafe.AsRef<float>(&NativePtr->TabBarOverlineSize);
-        public ref float TableAngledHeadersAngle => ref Unsafe.AsRef<float>(&NativePtr->TableAngledHeadersAngle);
-        public ref Vector2 TableAngledHeadersTextAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->TableAngledHeadersTextAlign);
-        public ref ImGuiDir ColorButtonPosition => ref Unsafe.AsRef<ImGuiDir>(&NativePtr->ColorButtonPosition);
-        public ref Vector2 ButtonTextAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->ButtonTextAlign);
-        public ref Vector2 SelectableTextAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->SelectableTextAlign);
-        public ref float SeparatorTextBorderSize => ref Unsafe.AsRef<float>(&NativePtr->SeparatorTextBorderSize);
-        public ref Vector2 SeparatorTextAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->SeparatorTextAlign);
-        public ref Vector2 SeparatorTextPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->SeparatorTextPadding);
-        public ref Vector2 DisplayWindowPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayWindowPadding);
-        public ref Vector2 DisplaySafeAreaPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplaySafeAreaPadding);
-        public ref float DockingSeparatorSize => ref Unsafe.AsRef<float>(&NativePtr->DockingSeparatorSize);
-        public ref float MouseCursorScale => ref Unsafe.AsRef<float>(&NativePtr->MouseCursorScale);
-        public ref bool AntiAliasedLines => ref Unsafe.AsRef<bool>(&NativePtr->AntiAliasedLines);
-        public ref bool AntiAliasedLinesUseTex => ref Unsafe.AsRef<bool>(&NativePtr->AntiAliasedLinesUseTex);
-        public ref bool AntiAliasedFill => ref Unsafe.AsRef<bool>(&NativePtr->AntiAliasedFill);
-        public ref float CurveTessellationTol => ref Unsafe.AsRef<float>(&NativePtr->CurveTessellationTol);
-        public ref float CircleTessellationMaxError => ref Unsafe.AsRef<float>(&NativePtr->CircleTessellationMaxError);
+        public ref float Alpha => ref NativePtr->Alpha;
+        public ref float DisabledAlpha => ref NativePtr->DisabledAlpha;
+        public ref Vector2 WindowPadding => ref NativePtr->WindowPadding;
+        public ref float WindowRounding => ref NativePtr->WindowRounding;
+        public ref float WindowBorderSize => ref NativePtr->WindowBorderSize;
+        public ref Vector2 WindowMinSize => ref NativePtr->WindowMinSize;
+        public ref Vector2 WindowTitleAlign => ref NativePtr->WindowTitleAlign;
+        public ref ImGuiDir WindowMenuButtonPosition => ref NativePtr->WindowMenuButtonPosition;
+        public ref float ChildRounding => ref NativePtr->ChildRounding;
+        public ref float ChildBorderSize => ref NativePtr->ChildBorderSize;
+        public ref float PopupRounding => ref NativePtr->PopupRounding;
+        public ref float PopupBorderSize => ref NativePtr->PopupBorderSize;
+        public ref Vector2 FramePadding => ref NativePtr->FramePadding;
+        public ref float FrameRounding => ref NativePtr->FrameRounding;
+        public ref float FrameBorderSize => ref NativePtr->FrameBorderSize;
+        public ref Vector2 ItemSpacing => ref NativePtr->ItemSpacing;
+        public ref Vector2 ItemInnerSpacing => ref NativePtr->ItemInnerSpacing;
+        public ref Vector2 CellPadding => ref NativePtr->CellPadding;
+        public ref Vector2 TouchExtraPadding => ref NativePtr->TouchExtraPadding;
+        public ref float IndentSpacing => ref NativePtr->IndentSpacing;
+        public ref float ColumnsMinSpacing => ref NativePtr->ColumnsMinSpacing;
+        public ref float ScrollbarSize => ref NativePtr->ScrollbarSize;
+        public ref float ScrollbarRounding => ref NativePtr->ScrollbarRounding;
+        public ref float GrabMinSize => ref NativePtr->GrabMinSize;
+        public ref float GrabRounding => ref NativePtr->GrabRounding;
+        public ref float LogSliderDeadzone => ref NativePtr->LogSliderDeadzone;
+        public ref float TabRounding => ref NativePtr->TabRounding;
+        public ref float TabBorderSize => ref NativePtr->TabBorderSize;
+        public ref float TabMinWidthForCloseButton => ref NativePtr->TabMinWidthForCloseButton;
+        public ref float TabBarBorderSize => ref NativePtr->TabBarBorderSize;
+        public ref float TabBarOverlineSize => ref NativePtr->TabBarOverlineSize;
+        public ref float TableAngledHeadersAngle => ref NativePtr->TableAngledHeadersAngle;
+        public ref Vector2 TableAngledHeadersTextAlign => ref NativePtr->TableAngledHeadersTextAlign;
+        public ref ImGuiDir ColorButtonPosition => ref NativePtr->ColorButtonPosition;
+        public ref Vector2 ButtonTextAlign => ref NativePtr->ButtonTextAlign;
+        public ref Vector2 SelectableTextAlign => ref NativePtr->SelectableTextAlign;
+        public ref float SeparatorTextBorderSize => ref NativePtr->SeparatorTextBorderSize;
+        public ref Vector2 SeparatorTextAlign => ref NativePtr->SeparatorTextAlign;
+        public ref Vector2 SeparatorTextPadding => ref NativePtr->SeparatorTextPadding;
+        public ref Vector2 DisplayWindowPadding => ref NativePtr->DisplayWindowPadding;
+        public ref Vector2 DisplaySafeAreaPadding => ref NativePtr->DisplaySafeAreaPadding;
+        public ref float DockingSeparatorSize => ref NativePtr->DockingSeparatorSize;
+        public ref float MouseCursorScale => ref NativePtr->MouseCursorScale;
+        public bool AntiAliasedLines
+        {
+            get => NativePtr->AntiAliasedLines != 0;
+            set => NativePtr->AntiAliasedLines = (byte)(value ? 1 : 0);
+        }
+        public bool AntiAliasedLinesUseTex
+        {
+            get => NativePtr->AntiAliasedLinesUseTex != 0;
+            set => NativePtr->AntiAliasedLinesUseTex = (byte)(value ? 1 : 0);
+        }
+        public bool AntiAliasedFill
+        {
+            get => NativePtr->AntiAliasedFill != 0;
+            set => NativePtr->AntiAliasedFill = (byte)(value ? 1 : 0);
+        }
+        public ref float CurveTessellationTol => ref NativePtr->CurveTessellationTol;
+        public ref float CircleTessellationMaxError => ref NativePtr->CircleTessellationMaxError;
         public RangeAccessor<Vector4> Colors => new RangeAccessor<Vector4>(&NativePtr->Colors_0, 58);
-        public ref float HoverStationaryDelay => ref Unsafe.AsRef<float>(&NativePtr->HoverStationaryDelay);
-        public ref float HoverDelayShort => ref Unsafe.AsRef<float>(&NativePtr->HoverDelayShort);
-        public ref float HoverDelayNormal => ref Unsafe.AsRef<float>(&NativePtr->HoverDelayNormal);
-        public ref ImGuiHoveredFlags HoverFlagsForTooltipMouse => ref Unsafe.AsRef<ImGuiHoveredFlags>(&NativePtr->HoverFlagsForTooltipMouse);
-        public ref ImGuiHoveredFlags HoverFlagsForTooltipNav => ref Unsafe.AsRef<ImGuiHoveredFlags>(&NativePtr->HoverFlagsForTooltipNav);
+        public ref float HoverStationaryDelay => ref NativePtr->HoverStationaryDelay;
+        public ref float HoverDelayShort => ref NativePtr->HoverDelayShort;
+        public ref float HoverDelayNormal => ref NativePtr->HoverDelayNormal;
+        public ref ImGuiHoveredFlags HoverFlagsForTooltipMouse => ref NativePtr->HoverFlagsForTooltipMouse;
+        public ref ImGuiHoveredFlags HoverFlagsForTooltipNav => ref NativePtr->HoverFlagsForTooltipNav;
         public void Destroy()
         {
             ImGuiNative.ImGuiStyle_destroy((ImGuiStyle*)(NativePtr));

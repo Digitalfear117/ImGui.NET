@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -20,9 +20,13 @@ namespace ImGuiNET
         public static implicit operator ImGuiKeyDataPtr(ImGuiKeyData* nativePtr) => new ImGuiKeyDataPtr(nativePtr);
         public static implicit operator ImGuiKeyData* (ImGuiKeyDataPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiKeyDataPtr(IntPtr nativePtr) => new ImGuiKeyDataPtr(nativePtr);
-        public ref bool Down => ref Unsafe.AsRef<bool>(&NativePtr->Down);
-        public ref float DownDuration => ref Unsafe.AsRef<float>(&NativePtr->DownDuration);
-        public ref float DownDurationPrev => ref Unsafe.AsRef<float>(&NativePtr->DownDurationPrev);
-        public ref float AnalogValue => ref Unsafe.AsRef<float>(&NativePtr->AnalogValue);
+        public bool Down
+        {
+            get => NativePtr->Down != 0;
+            set => NativePtr->Down = (byte)(value ? 1 : 0);
+        }
+        public ref float DownDuration => ref NativePtr->DownDuration;
+        public ref float DownDurationPrev => ref NativePtr->DownDurationPrev;
+        public ref float AnalogValue => ref NativePtr->AnalogValue;
     }
 }

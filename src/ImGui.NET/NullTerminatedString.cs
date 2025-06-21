@@ -13,15 +13,20 @@ namespace ImGuiNET
 
         public override string ToString()
         {
+            if (Data == null) return string.Empty;
             int length = 0;
             byte* ptr = Data;
             while (*ptr != 0)
             {
-                length += 1;
-                ptr += 1;
+                length++;
+                ptr++;
             }
-
-            return Encoding.ASCII.GetString(Data, length);
+            byte[] buffer = new byte[length];
+            for (int i = 0; i < length; i++)
+            {
+                buffer[i] = Data[i];
+            }
+            return Encoding.ASCII.GetString(buffer);
         }
 
         public static implicit operator string(NullTerminatedString nts) => nts.ToString();

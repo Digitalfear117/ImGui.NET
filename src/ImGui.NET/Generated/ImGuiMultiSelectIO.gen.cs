@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -22,11 +22,19 @@ namespace ImGuiNET
         public static implicit operator ImGuiMultiSelectIOPtr(ImGuiMultiSelectIO* nativePtr) => new ImGuiMultiSelectIOPtr(nativePtr);
         public static implicit operator ImGuiMultiSelectIO* (ImGuiMultiSelectIOPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiMultiSelectIOPtr(IntPtr nativePtr) => new ImGuiMultiSelectIOPtr(nativePtr);
-        public ImPtrVector<ImGuiSelectionRequestPtr> Requests => new ImPtrVector<ImGuiSelectionRequestPtr>(NativePtr->Requests, Unsafe.SizeOf<ImGuiSelectionRequest>());
-        public ref long RangeSrcItem => ref Unsafe.AsRef<long>(&NativePtr->RangeSrcItem);
-        public ref long NavIdItem => ref Unsafe.AsRef<long>(&NativePtr->NavIdItem);
-        public ref bool NavIdSelected => ref Unsafe.AsRef<bool>(&NativePtr->NavIdSelected);
-        public ref bool RangeSrcReset => ref Unsafe.AsRef<bool>(&NativePtr->RangeSrcReset);
-        public ref int ItemsCount => ref Unsafe.AsRef<int>(&NativePtr->ItemsCount);
+        public ImPtrVector<ImGuiSelectionRequestPtr> Requests => new ImPtrVector<ImGuiSelectionRequestPtr>(NativePtr->Requests, sizeof(ImGuiSelectionRequest));
+        public ref long RangeSrcItem => ref NativePtr->RangeSrcItem;
+        public ref long NavIdItem => ref NativePtr->NavIdItem;
+        public bool NavIdSelected
+        {
+            get => NativePtr->NavIdSelected != 0;
+            set => NativePtr->NavIdSelected = (byte)(value ? 1 : 0);
+        }
+        public bool RangeSrcReset
+        {
+            get => NativePtr->RangeSrcReset != 0;
+            set => NativePtr->RangeSrcReset = (byte)(value ? 1 : 0);
+        }
+        public ref int ItemsCount => ref NativePtr->ItemsCount;
     }
 }

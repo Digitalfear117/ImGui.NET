@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -25,13 +25,21 @@ namespace ImGuiNET
         public static implicit operator ImGuiPayload* (ImGuiPayloadPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiPayloadPtr(IntPtr nativePtr) => new ImGuiPayloadPtr(nativePtr);
         public IntPtr Data { get => (IntPtr)NativePtr->Data; set => NativePtr->Data = (void*)value; }
-        public ref int DataSize => ref Unsafe.AsRef<int>(&NativePtr->DataSize);
-        public ref uint SourceId => ref Unsafe.AsRef<uint>(&NativePtr->SourceId);
-        public ref uint SourceParentId => ref Unsafe.AsRef<uint>(&NativePtr->SourceParentId);
-        public ref int DataFrameCount => ref Unsafe.AsRef<int>(&NativePtr->DataFrameCount);
+        public ref int DataSize => ref NativePtr->DataSize;
+        public ref uint SourceId => ref NativePtr->SourceId;
+        public ref uint SourceParentId => ref NativePtr->SourceParentId;
+        public ref int DataFrameCount => ref NativePtr->DataFrameCount;
         public RangeAccessor<byte> DataType => new RangeAccessor<byte>(NativePtr->DataType, 33);
-        public ref bool Preview => ref Unsafe.AsRef<bool>(&NativePtr->Preview);
-        public ref bool Delivery => ref Unsafe.AsRef<bool>(&NativePtr->Delivery);
+        public bool Preview
+        {
+            get => NativePtr->Preview != 0;
+            set => NativePtr->Preview = (byte)(value ? 1 : 0);
+        }
+        public bool Delivery
+        {
+            get => NativePtr->Delivery != 0;
+            set => NativePtr->Delivery = (byte)(value ? 1 : 0);
+        }
         public void Clear()
         {
             ImGuiNative.ImGuiPayload_Clear((ImGuiPayload*)(NativePtr));

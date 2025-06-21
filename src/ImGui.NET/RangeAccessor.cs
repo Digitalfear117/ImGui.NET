@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace ImGuiNET
 {
     public unsafe struct RangeAccessor<T> where T : struct
     {
-        private static readonly int s_sizeOfT = Unsafe.SizeOf<T>();
+        private static readonly int s_sizeOfT = Marshal.SizeOf(typeof(T));
 
         public readonly void* Data;
         public readonly int Count;
@@ -23,17 +24,18 @@ namespace ImGuiNET
             get
             {
                 if (index < 0 || index >= Count)
-                {
                     throw new IndexOutOfRangeException();
-                }
-
-                return ref Unsafe.AsRef<T>((byte*)Data + s_sizeOfT * index);
+                byte* basePtr = (byte*)Data;
+                T* elementPtr = (T*)(basePtr + s_sizeOfT * index);
+                return ref *elementPtr;
             }
         }
     }
 
     public unsafe struct RangePtrAccessor<T> where T : struct
     {
+        private static readonly int s_sizeOfT = Marshal.SizeOf(typeof(T));
+
         public readonly void* Data;
         public readonly int Count;
 
@@ -49,11 +51,16 @@ namespace ImGuiNET
             get
             {
                 if (index < 0 || index >= Count)
-                {
                     throw new IndexOutOfRangeException();
-                }
+                // If Data is pointer to contiguous array of T:
+                byte* basePtr = (byte*)Data;
+                T* elementPtr = (T*)(basePtr + s_sizeOfT * index);
+                return *elementPtr;
 
-                return Unsafe.Read<T>((byte*)Data + sizeof(void*) * index);
+                // If Data is pointer to array of pointers to T, use:
+                // void** ptrs = (void**)Data;
+                // void* addr = ptrs[index];
+                // return *(T*)addr;
             }
         }
     }
@@ -62,7 +69,13 @@ namespace ImGuiNET
     {
         public static unsafe string GetStringASCII(this RangeAccessor<byte> stringAccessor)
         {
-            return Encoding.ASCII.GetString((byte*)stringAccessor.Data, stringAccessor.Count);
+            if (stringAccessor.Data == null || stringAccessor.Count <= 0)
+                return string.Empty;
+            int len = stringAccessor.Count;
+            byte[] buffer = new byte[len];
+            // copy from unmanaged pointer to managed array
+            Marshal.Copy((IntPtr)stringAccessor.Data, buffer, 0, len);
+            return Encoding.ASCII.GetString(buffer);
         }
     }
 }

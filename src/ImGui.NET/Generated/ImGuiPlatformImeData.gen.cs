@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -19,9 +19,13 @@ namespace ImGuiNET
         public static implicit operator ImGuiPlatformImeDataPtr(ImGuiPlatformImeData* nativePtr) => new ImGuiPlatformImeDataPtr(nativePtr);
         public static implicit operator ImGuiPlatformImeData* (ImGuiPlatformImeDataPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiPlatformImeDataPtr(IntPtr nativePtr) => new ImGuiPlatformImeDataPtr(nativePtr);
-        public ref bool WantVisible => ref Unsafe.AsRef<bool>(&NativePtr->WantVisible);
-        public ref Vector2 InputPos => ref Unsafe.AsRef<Vector2>(&NativePtr->InputPos);
-        public ref float InputLineHeight => ref Unsafe.AsRef<float>(&NativePtr->InputLineHeight);
+        public bool WantVisible
+        {
+            get => NativePtr->WantVisible != 0;
+            set => NativePtr->WantVisible = (byte)(value ? 1 : 0);
+        }
+        public ref Vector2 InputPos => ref NativePtr->InputPos;
+        public ref float InputLineHeight => ref NativePtr->InputLineHeight;
         public void Destroy()
         {
             ImGuiNative.ImGuiPlatformImeData_destroy((ImGuiPlatformImeData*)(NativePtr));

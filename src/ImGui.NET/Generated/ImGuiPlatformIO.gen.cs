@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -51,40 +51,40 @@ namespace ImGuiNET
         public static implicit operator ImGuiPlatformIOPtr(ImGuiPlatformIO* nativePtr) => new ImGuiPlatformIOPtr(nativePtr);
         public static implicit operator ImGuiPlatformIO* (ImGuiPlatformIOPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiPlatformIOPtr(IntPtr nativePtr) => new ImGuiPlatformIOPtr(nativePtr);
-        public ref IntPtr Platform_GetClipboardTextFn => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_GetClipboardTextFn);
-        public ref IntPtr Platform_SetClipboardTextFn => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_SetClipboardTextFn);
+        public ref IntPtr Platform_GetClipboardTextFn => ref NativePtr->Platform_GetClipboardTextFn;
+        public ref IntPtr Platform_SetClipboardTextFn => ref NativePtr->Platform_SetClipboardTextFn;
         public IntPtr Platform_ClipboardUserData { get => (IntPtr)NativePtr->Platform_ClipboardUserData; set => NativePtr->Platform_ClipboardUserData = (void*)value; }
-        public ref IntPtr Platform_OpenInShellFn => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_OpenInShellFn);
+        public ref IntPtr Platform_OpenInShellFn => ref NativePtr->Platform_OpenInShellFn;
         public IntPtr Platform_OpenInShellUserData { get => (IntPtr)NativePtr->Platform_OpenInShellUserData; set => NativePtr->Platform_OpenInShellUserData = (void*)value; }
-        public ref IntPtr Platform_SetImeDataFn => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_SetImeDataFn);
+        public ref IntPtr Platform_SetImeDataFn => ref NativePtr->Platform_SetImeDataFn;
         public IntPtr Platform_ImeUserData { get => (IntPtr)NativePtr->Platform_ImeUserData; set => NativePtr->Platform_ImeUserData = (void*)value; }
-        public ref ushort Platform_LocaleDecimalPoint => ref Unsafe.AsRef<ushort>(&NativePtr->Platform_LocaleDecimalPoint);
+        public ref ushort Platform_LocaleDecimalPoint => ref NativePtr->Platform_LocaleDecimalPoint;
         public IntPtr Renderer_RenderState { get => (IntPtr)NativePtr->Renderer_RenderState; set => NativePtr->Renderer_RenderState = (void*)value; }
-        public ref IntPtr Platform_CreateWindow => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_CreateWindow);
-        public ref IntPtr Platform_DestroyWindow => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_DestroyWindow);
-        public ref IntPtr Platform_ShowWindow => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_ShowWindow);
-        public ref IntPtr Platform_SetWindowPos => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_SetWindowPos);
-        public ref IntPtr Platform_GetWindowPos => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_GetWindowPos);
-        public ref IntPtr Platform_SetWindowSize => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_SetWindowSize);
-        public ref IntPtr Platform_GetWindowSize => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_GetWindowSize);
-        public ref IntPtr Platform_SetWindowFocus => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_SetWindowFocus);
-        public ref IntPtr Platform_GetWindowFocus => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_GetWindowFocus);
-        public ref IntPtr Platform_GetWindowMinimized => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_GetWindowMinimized);
-        public ref IntPtr Platform_SetWindowTitle => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_SetWindowTitle);
-        public ref IntPtr Platform_SetWindowAlpha => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_SetWindowAlpha);
-        public ref IntPtr Platform_UpdateWindow => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_UpdateWindow);
-        public ref IntPtr Platform_RenderWindow => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_RenderWindow);
-        public ref IntPtr Platform_SwapBuffers => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_SwapBuffers);
-        public ref IntPtr Platform_GetWindowDpiScale => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_GetWindowDpiScale);
-        public ref IntPtr Platform_OnChangedViewport => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_OnChangedViewport);
-        public ref IntPtr Platform_GetWindowWorkAreaInsets => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_GetWindowWorkAreaInsets);
-        public ref IntPtr Platform_CreateVkSurface => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_CreateVkSurface);
-        public ref IntPtr Renderer_CreateWindow => ref Unsafe.AsRef<IntPtr>(&NativePtr->Renderer_CreateWindow);
-        public ref IntPtr Renderer_DestroyWindow => ref Unsafe.AsRef<IntPtr>(&NativePtr->Renderer_DestroyWindow);
-        public ref IntPtr Renderer_SetWindowSize => ref Unsafe.AsRef<IntPtr>(&NativePtr->Renderer_SetWindowSize);
-        public ref IntPtr Renderer_RenderWindow => ref Unsafe.AsRef<IntPtr>(&NativePtr->Renderer_RenderWindow);
-        public ref IntPtr Renderer_SwapBuffers => ref Unsafe.AsRef<IntPtr>(&NativePtr->Renderer_SwapBuffers);
-        public ImPtrVector<ImGuiPlatformMonitorPtr> Monitors => new ImPtrVector<ImGuiPlatformMonitorPtr>(NativePtr->Monitors, Unsafe.SizeOf<ImGuiPlatformMonitor>());
+        public ref IntPtr Platform_CreateWindow => ref NativePtr->Platform_CreateWindow;
+        public ref IntPtr Platform_DestroyWindow => ref NativePtr->Platform_DestroyWindow;
+        public ref IntPtr Platform_ShowWindow => ref NativePtr->Platform_ShowWindow;
+        public ref IntPtr Platform_SetWindowPos => ref NativePtr->Platform_SetWindowPos;
+        public ref IntPtr Platform_GetWindowPos => ref NativePtr->Platform_GetWindowPos;
+        public ref IntPtr Platform_SetWindowSize => ref NativePtr->Platform_SetWindowSize;
+        public ref IntPtr Platform_GetWindowSize => ref NativePtr->Platform_GetWindowSize;
+        public ref IntPtr Platform_SetWindowFocus => ref NativePtr->Platform_SetWindowFocus;
+        public ref IntPtr Platform_GetWindowFocus => ref NativePtr->Platform_GetWindowFocus;
+        public ref IntPtr Platform_GetWindowMinimized => ref NativePtr->Platform_GetWindowMinimized;
+        public ref IntPtr Platform_SetWindowTitle => ref NativePtr->Platform_SetWindowTitle;
+        public ref IntPtr Platform_SetWindowAlpha => ref NativePtr->Platform_SetWindowAlpha;
+        public ref IntPtr Platform_UpdateWindow => ref NativePtr->Platform_UpdateWindow;
+        public ref IntPtr Platform_RenderWindow => ref NativePtr->Platform_RenderWindow;
+        public ref IntPtr Platform_SwapBuffers => ref NativePtr->Platform_SwapBuffers;
+        public ref IntPtr Platform_GetWindowDpiScale => ref NativePtr->Platform_GetWindowDpiScale;
+        public ref IntPtr Platform_OnChangedViewport => ref NativePtr->Platform_OnChangedViewport;
+        public ref IntPtr Platform_GetWindowWorkAreaInsets => ref NativePtr->Platform_GetWindowWorkAreaInsets;
+        public ref IntPtr Platform_CreateVkSurface => ref NativePtr->Platform_CreateVkSurface;
+        public ref IntPtr Renderer_CreateWindow => ref NativePtr->Renderer_CreateWindow;
+        public ref IntPtr Renderer_DestroyWindow => ref NativePtr->Renderer_DestroyWindow;
+        public ref IntPtr Renderer_SetWindowSize => ref NativePtr->Renderer_SetWindowSize;
+        public ref IntPtr Renderer_RenderWindow => ref NativePtr->Renderer_RenderWindow;
+        public ref IntPtr Renderer_SwapBuffers => ref NativePtr->Renderer_SwapBuffers;
+        public ImPtrVector<ImGuiPlatformMonitorPtr> Monitors => new ImPtrVector<ImGuiPlatformMonitorPtr>(NativePtr->Monitors, sizeof(ImGuiPlatformMonitor));
         public ImVector<ImGuiViewportPtr> Viewports => new ImVector<ImGuiViewportPtr>(NativePtr->Viewports);
         public void Destroy()
         {

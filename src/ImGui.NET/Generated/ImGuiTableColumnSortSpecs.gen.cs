@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -20,10 +20,10 @@ namespace ImGuiNET
         public static implicit operator ImGuiTableColumnSortSpecsPtr(ImGuiTableColumnSortSpecs* nativePtr) => new ImGuiTableColumnSortSpecsPtr(nativePtr);
         public static implicit operator ImGuiTableColumnSortSpecs* (ImGuiTableColumnSortSpecsPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiTableColumnSortSpecsPtr(IntPtr nativePtr) => new ImGuiTableColumnSortSpecsPtr(nativePtr);
-        public ref uint ColumnUserID => ref Unsafe.AsRef<uint>(&NativePtr->ColumnUserID);
-        public ref short ColumnIndex => ref Unsafe.AsRef<short>(&NativePtr->ColumnIndex);
-        public ref short SortOrder => ref Unsafe.AsRef<short>(&NativePtr->SortOrder);
-        public ref ImGuiSortDirection SortDirection => ref Unsafe.AsRef<ImGuiSortDirection>(&NativePtr->SortDirection);
+        public ref uint ColumnUserID => ref NativePtr->ColumnUserID;
+        public ref short ColumnIndex => ref NativePtr->ColumnIndex;
+        public ref short SortOrder => ref NativePtr->SortOrder;
+        public ref ImGuiSortDirection SortDirection => ref NativePtr->SortDirection;
         public void Destroy()
         {
             ImGuiNative.ImGuiTableColumnSortSpecs_destroy((ImGuiTableColumnSortSpecs*)(NativePtr));

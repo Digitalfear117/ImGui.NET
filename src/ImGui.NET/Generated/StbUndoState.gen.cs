@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -122,9 +122,9 @@ namespace ImGuiNET
         public static implicit operator StbUndoStatePtr(IntPtr nativePtr) => new StbUndoStatePtr(nativePtr);
         public RangeAccessor<StbUndoRecord> undo_rec => new RangeAccessor<StbUndoRecord>(&NativePtr->undo_rec_0, 99);
         public RangeAccessor<ushort> undo_char => new RangeAccessor<ushort>(NativePtr->undo_char, 999);
-        public ref short undo_point => ref Unsafe.AsRef<short>(&NativePtr->undo_point);
-        public ref short redo_point => ref Unsafe.AsRef<short>(&NativePtr->redo_point);
-        public ref int undo_char_point => ref Unsafe.AsRef<int>(&NativePtr->undo_char_point);
-        public ref int redo_char_point => ref Unsafe.AsRef<int>(&NativePtr->redo_char_point);
+        public ref short undo_point => ref NativePtr->undo_point;
+        public ref short redo_point => ref NativePtr->redo_point;
+        public ref int undo_char_point => ref NativePtr->undo_char_point;
+        public ref int redo_char_point => ref NativePtr->redo_char_point;
     }
 }

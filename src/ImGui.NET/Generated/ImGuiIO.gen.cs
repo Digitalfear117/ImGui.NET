@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -284,93 +284,280 @@ namespace ImGuiNET
         public static implicit operator ImGuiIOPtr(ImGuiIO* nativePtr) => new ImGuiIOPtr(nativePtr);
         public static implicit operator ImGuiIO* (ImGuiIOPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiIOPtr(IntPtr nativePtr) => new ImGuiIOPtr(nativePtr);
-        public ref ImGuiConfigFlags ConfigFlags => ref Unsafe.AsRef<ImGuiConfigFlags>(&NativePtr->ConfigFlags);
-        public ref ImGuiBackendFlags BackendFlags => ref Unsafe.AsRef<ImGuiBackendFlags>(&NativePtr->BackendFlags);
-        public ref Vector2 DisplaySize => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplaySize);
-        public ref float DeltaTime => ref Unsafe.AsRef<float>(&NativePtr->DeltaTime);
-        public ref float IniSavingRate => ref Unsafe.AsRef<float>(&NativePtr->IniSavingRate);
+        public ref ImGuiConfigFlags ConfigFlags => ref NativePtr->ConfigFlags;
+        public ref ImGuiBackendFlags BackendFlags => ref NativePtr->BackendFlags;
+        public ref Vector2 DisplaySize => ref NativePtr->DisplaySize;
+        public ref float DeltaTime => ref NativePtr->DeltaTime;
+        public ref float IniSavingRate => ref NativePtr->IniSavingRate;
         public NullTerminatedString IniFilename => new NullTerminatedString(NativePtr->IniFilename);
         public NullTerminatedString LogFilename => new NullTerminatedString(NativePtr->LogFilename);
         public IntPtr UserData { get => (IntPtr)NativePtr->UserData; set => NativePtr->UserData = (void*)value; }
         public ImFontAtlasPtr Fonts => new ImFontAtlasPtr(NativePtr->Fonts);
-        public ref float FontGlobalScale => ref Unsafe.AsRef<float>(&NativePtr->FontGlobalScale);
-        public ref bool FontAllowUserScaling => ref Unsafe.AsRef<bool>(&NativePtr->FontAllowUserScaling);
+        public ref float FontGlobalScale => ref NativePtr->FontGlobalScale;
+        public bool FontAllowUserScaling
+        {
+            get => NativePtr->FontAllowUserScaling != 0;
+            set => NativePtr->FontAllowUserScaling = (byte)(value ? 1 : 0);
+        }
         public ImFontPtr FontDefault => new ImFontPtr(NativePtr->FontDefault);
-        public ref Vector2 DisplayFramebufferScale => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayFramebufferScale);
-        public ref bool ConfigNavSwapGamepadButtons => ref Unsafe.AsRef<bool>(&NativePtr->ConfigNavSwapGamepadButtons);
-        public ref bool ConfigNavMoveSetMousePos => ref Unsafe.AsRef<bool>(&NativePtr->ConfigNavMoveSetMousePos);
-        public ref bool ConfigNavCaptureKeyboard => ref Unsafe.AsRef<bool>(&NativePtr->ConfigNavCaptureKeyboard);
-        public ref bool ConfigNavEscapeClearFocusItem => ref Unsafe.AsRef<bool>(&NativePtr->ConfigNavEscapeClearFocusItem);
-        public ref bool ConfigNavEscapeClearFocusWindow => ref Unsafe.AsRef<bool>(&NativePtr->ConfigNavEscapeClearFocusWindow);
-        public ref bool ConfigNavCursorVisibleAuto => ref Unsafe.AsRef<bool>(&NativePtr->ConfigNavCursorVisibleAuto);
-        public ref bool ConfigNavCursorVisibleAlways => ref Unsafe.AsRef<bool>(&NativePtr->ConfigNavCursorVisibleAlways);
-        public ref bool ConfigDockingNoSplit => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDockingNoSplit);
-        public ref bool ConfigDockingWithShift => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDockingWithShift);
-        public ref bool ConfigDockingAlwaysTabBar => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDockingAlwaysTabBar);
-        public ref bool ConfigDockingTransparentPayload => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDockingTransparentPayload);
-        public ref bool ConfigViewportsNoAutoMerge => ref Unsafe.AsRef<bool>(&NativePtr->ConfigViewportsNoAutoMerge);
-        public ref bool ConfigViewportsNoTaskBarIcon => ref Unsafe.AsRef<bool>(&NativePtr->ConfigViewportsNoTaskBarIcon);
-        public ref bool ConfigViewportsNoDecoration => ref Unsafe.AsRef<bool>(&NativePtr->ConfigViewportsNoDecoration);
-        public ref bool ConfigViewportsNoDefaultParent => ref Unsafe.AsRef<bool>(&NativePtr->ConfigViewportsNoDefaultParent);
-        public ref bool MouseDrawCursor => ref Unsafe.AsRef<bool>(&NativePtr->MouseDrawCursor);
-        public ref bool ConfigMacOSXBehaviors => ref Unsafe.AsRef<bool>(&NativePtr->ConfigMacOSXBehaviors);
-        public ref bool ConfigInputTrickleEventQueue => ref Unsafe.AsRef<bool>(&NativePtr->ConfigInputTrickleEventQueue);
-        public ref bool ConfigInputTextCursorBlink => ref Unsafe.AsRef<bool>(&NativePtr->ConfigInputTextCursorBlink);
-        public ref bool ConfigInputTextEnterKeepActive => ref Unsafe.AsRef<bool>(&NativePtr->ConfigInputTextEnterKeepActive);
-        public ref bool ConfigDragClickToInputText => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDragClickToInputText);
-        public ref bool ConfigWindowsResizeFromEdges => ref Unsafe.AsRef<bool>(&NativePtr->ConfigWindowsResizeFromEdges);
-        public ref bool ConfigWindowsMoveFromTitleBarOnly => ref Unsafe.AsRef<bool>(&NativePtr->ConfigWindowsMoveFromTitleBarOnly);
-        public ref bool ConfigWindowsCopyContentsWithCtrlC => ref Unsafe.AsRef<bool>(&NativePtr->ConfigWindowsCopyContentsWithCtrlC);
-        public ref bool ConfigScrollbarScrollByPage => ref Unsafe.AsRef<bool>(&NativePtr->ConfigScrollbarScrollByPage);
-        public ref float ConfigMemoryCompactTimer => ref Unsafe.AsRef<float>(&NativePtr->ConfigMemoryCompactTimer);
-        public ref float MouseDoubleClickTime => ref Unsafe.AsRef<float>(&NativePtr->MouseDoubleClickTime);
-        public ref float MouseDoubleClickMaxDist => ref Unsafe.AsRef<float>(&NativePtr->MouseDoubleClickMaxDist);
-        public ref float MouseDragThreshold => ref Unsafe.AsRef<float>(&NativePtr->MouseDragThreshold);
-        public ref float KeyRepeatDelay => ref Unsafe.AsRef<float>(&NativePtr->KeyRepeatDelay);
-        public ref float KeyRepeatRate => ref Unsafe.AsRef<float>(&NativePtr->KeyRepeatRate);
-        public ref bool ConfigErrorRecovery => ref Unsafe.AsRef<bool>(&NativePtr->ConfigErrorRecovery);
-        public ref bool ConfigErrorRecoveryEnableAssert => ref Unsafe.AsRef<bool>(&NativePtr->ConfigErrorRecoveryEnableAssert);
-        public ref bool ConfigErrorRecoveryEnableDebugLog => ref Unsafe.AsRef<bool>(&NativePtr->ConfigErrorRecoveryEnableDebugLog);
-        public ref bool ConfigErrorRecoveryEnableTooltip => ref Unsafe.AsRef<bool>(&NativePtr->ConfigErrorRecoveryEnableTooltip);
-        public ref bool ConfigDebugIsDebuggerPresent => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDebugIsDebuggerPresent);
-        public ref bool ConfigDebugHighlightIdConflicts => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDebugHighlightIdConflicts);
-        public ref bool ConfigDebugBeginReturnValueOnce => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDebugBeginReturnValueOnce);
-        public ref bool ConfigDebugBeginReturnValueLoop => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDebugBeginReturnValueLoop);
-        public ref bool ConfigDebugIgnoreFocusLoss => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDebugIgnoreFocusLoss);
-        public ref bool ConfigDebugIniSettings => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDebugIniSettings);
+        public ref Vector2 DisplayFramebufferScale => ref NativePtr->DisplayFramebufferScale;
+        public bool ConfigNavSwapGamepadButtons
+        {
+            get => NativePtr->ConfigNavSwapGamepadButtons != 0;
+            set => NativePtr->ConfigNavSwapGamepadButtons = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigNavMoveSetMousePos
+        {
+            get => NativePtr->ConfigNavMoveSetMousePos != 0;
+            set => NativePtr->ConfigNavMoveSetMousePos = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigNavCaptureKeyboard
+        {
+            get => NativePtr->ConfigNavCaptureKeyboard != 0;
+            set => NativePtr->ConfigNavCaptureKeyboard = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigNavEscapeClearFocusItem
+        {
+            get => NativePtr->ConfigNavEscapeClearFocusItem != 0;
+            set => NativePtr->ConfigNavEscapeClearFocusItem = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigNavEscapeClearFocusWindow
+        {
+            get => NativePtr->ConfigNavEscapeClearFocusWindow != 0;
+            set => NativePtr->ConfigNavEscapeClearFocusWindow = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigNavCursorVisibleAuto
+        {
+            get => NativePtr->ConfigNavCursorVisibleAuto != 0;
+            set => NativePtr->ConfigNavCursorVisibleAuto = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigNavCursorVisibleAlways
+        {
+            get => NativePtr->ConfigNavCursorVisibleAlways != 0;
+            set => NativePtr->ConfigNavCursorVisibleAlways = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigDockingNoSplit
+        {
+            get => NativePtr->ConfigDockingNoSplit != 0;
+            set => NativePtr->ConfigDockingNoSplit = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigDockingWithShift
+        {
+            get => NativePtr->ConfigDockingWithShift != 0;
+            set => NativePtr->ConfigDockingWithShift = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigDockingAlwaysTabBar
+        {
+            get => NativePtr->ConfigDockingAlwaysTabBar != 0;
+            set => NativePtr->ConfigDockingAlwaysTabBar = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigDockingTransparentPayload
+        {
+            get => NativePtr->ConfigDockingTransparentPayload != 0;
+            set => NativePtr->ConfigDockingTransparentPayload = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigViewportsNoAutoMerge
+        {
+            get => NativePtr->ConfigViewportsNoAutoMerge != 0;
+            set => NativePtr->ConfigViewportsNoAutoMerge = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigViewportsNoTaskBarIcon
+        {
+            get => NativePtr->ConfigViewportsNoTaskBarIcon != 0;
+            set => NativePtr->ConfigViewportsNoTaskBarIcon = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigViewportsNoDecoration
+        {
+            get => NativePtr->ConfigViewportsNoDecoration != 0;
+            set => NativePtr->ConfigViewportsNoDecoration = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigViewportsNoDefaultParent
+        {
+            get => NativePtr->ConfigViewportsNoDefaultParent != 0;
+            set => NativePtr->ConfigViewportsNoDefaultParent = (byte)(value ? 1 : 0);
+        }
+        public bool MouseDrawCursor
+        {
+            get => NativePtr->MouseDrawCursor != 0;
+            set => NativePtr->MouseDrawCursor = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigMacOSXBehaviors
+        {
+            get => NativePtr->ConfigMacOSXBehaviors != 0;
+            set => NativePtr->ConfigMacOSXBehaviors = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigInputTrickleEventQueue
+        {
+            get => NativePtr->ConfigInputTrickleEventQueue != 0;
+            set => NativePtr->ConfigInputTrickleEventQueue = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigInputTextCursorBlink
+        {
+            get => NativePtr->ConfigInputTextCursorBlink != 0;
+            set => NativePtr->ConfigInputTextCursorBlink = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigInputTextEnterKeepActive
+        {
+            get => NativePtr->ConfigInputTextEnterKeepActive != 0;
+            set => NativePtr->ConfigInputTextEnterKeepActive = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigDragClickToInputText
+        {
+            get => NativePtr->ConfigDragClickToInputText != 0;
+            set => NativePtr->ConfigDragClickToInputText = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigWindowsResizeFromEdges
+        {
+            get => NativePtr->ConfigWindowsResizeFromEdges != 0;
+            set => NativePtr->ConfigWindowsResizeFromEdges = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigWindowsMoveFromTitleBarOnly
+        {
+            get => NativePtr->ConfigWindowsMoveFromTitleBarOnly != 0;
+            set => NativePtr->ConfigWindowsMoveFromTitleBarOnly = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigWindowsCopyContentsWithCtrlC
+        {
+            get => NativePtr->ConfigWindowsCopyContentsWithCtrlC != 0;
+            set => NativePtr->ConfigWindowsCopyContentsWithCtrlC = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigScrollbarScrollByPage
+        {
+            get => NativePtr->ConfigScrollbarScrollByPage != 0;
+            set => NativePtr->ConfigScrollbarScrollByPage = (byte)(value ? 1 : 0);
+        }
+        public ref float ConfigMemoryCompactTimer => ref NativePtr->ConfigMemoryCompactTimer;
+        public ref float MouseDoubleClickTime => ref NativePtr->MouseDoubleClickTime;
+        public ref float MouseDoubleClickMaxDist => ref NativePtr->MouseDoubleClickMaxDist;
+        public ref float MouseDragThreshold => ref NativePtr->MouseDragThreshold;
+        public ref float KeyRepeatDelay => ref NativePtr->KeyRepeatDelay;
+        public ref float KeyRepeatRate => ref NativePtr->KeyRepeatRate;
+        public bool ConfigErrorRecovery
+        {
+            get => NativePtr->ConfigErrorRecovery != 0;
+            set => NativePtr->ConfigErrorRecovery = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigErrorRecoveryEnableDebugLog
+        {
+            get => NativePtr->ConfigErrorRecoveryEnableDebugLog != 0;
+            set => NativePtr->ConfigErrorRecoveryEnableDebugLog = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigErrorRecoveryEnableTooltip
+        {
+            get => NativePtr->ConfigErrorRecoveryEnableTooltip != 0;
+            set => NativePtr->ConfigErrorRecoveryEnableTooltip = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigDebugIsDebuggerPresent
+        {
+            get => NativePtr->ConfigDebugIsDebuggerPresent != 0;
+            set => NativePtr->ConfigDebugIsDebuggerPresent = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigDebugHighlightIdConflicts
+        {
+            get => NativePtr->ConfigDebugHighlightIdConflicts != 0;
+            set => NativePtr->ConfigDebugHighlightIdConflicts = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigDebugBeginReturnValueOnce
+        {
+            get => NativePtr->ConfigDebugBeginReturnValueOnce != 0;
+            set => NativePtr->ConfigDebugBeginReturnValueOnce = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigDebugBeginReturnValueLoop
+        {
+            get => NativePtr->ConfigDebugBeginReturnValueLoop != 0;
+            set => NativePtr->ConfigDebugBeginReturnValueLoop = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigDebugIgnoreFocusLoss
+        {
+            get => NativePtr->ConfigDebugIgnoreFocusLoss != 0;
+            set => NativePtr->ConfigDebugIgnoreFocusLoss = (byte)(value ? 1 : 0);
+        }
+        public bool ConfigDebugIniSettings
+        {
+            get => NativePtr->ConfigDebugIniSettings != 0;
+            set => NativePtr->ConfigDebugIniSettings = (byte)(value ? 1 : 0);
+        }
         public NullTerminatedString BackendPlatformName => new NullTerminatedString(NativePtr->BackendPlatformName);
         public NullTerminatedString BackendRendererName => new NullTerminatedString(NativePtr->BackendRendererName);
         public IntPtr BackendPlatformUserData { get => (IntPtr)NativePtr->BackendPlatformUserData; set => NativePtr->BackendPlatformUserData = (void*)value; }
         public IntPtr BackendRendererUserData { get => (IntPtr)NativePtr->BackendRendererUserData; set => NativePtr->BackendRendererUserData = (void*)value; }
         public IntPtr BackendLanguageUserData { get => (IntPtr)NativePtr->BackendLanguageUserData; set => NativePtr->BackendLanguageUserData = (void*)value; }
-        public ref bool WantCaptureMouse => ref Unsafe.AsRef<bool>(&NativePtr->WantCaptureMouse);
-        public ref bool WantCaptureKeyboard => ref Unsafe.AsRef<bool>(&NativePtr->WantCaptureKeyboard);
-        public ref bool WantTextInput => ref Unsafe.AsRef<bool>(&NativePtr->WantTextInput);
-        public ref bool WantSetMousePos => ref Unsafe.AsRef<bool>(&NativePtr->WantSetMousePos);
-        public ref bool WantSaveIniSettings => ref Unsafe.AsRef<bool>(&NativePtr->WantSaveIniSettings);
-        public ref bool NavActive => ref Unsafe.AsRef<bool>(&NativePtr->NavActive);
-        public ref bool NavVisible => ref Unsafe.AsRef<bool>(&NativePtr->NavVisible);
-        public ref float Framerate => ref Unsafe.AsRef<float>(&NativePtr->Framerate);
-        public ref int MetricsRenderVertices => ref Unsafe.AsRef<int>(&NativePtr->MetricsRenderVertices);
-        public ref int MetricsRenderIndices => ref Unsafe.AsRef<int>(&NativePtr->MetricsRenderIndices);
-        public ref int MetricsRenderWindows => ref Unsafe.AsRef<int>(&NativePtr->MetricsRenderWindows);
-        public ref int MetricsActiveWindows => ref Unsafe.AsRef<int>(&NativePtr->MetricsActiveWindows);
-        public ref Vector2 MouseDelta => ref Unsafe.AsRef<Vector2>(&NativePtr->MouseDelta);
-        public ref IntPtr Ctx => ref Unsafe.AsRef<IntPtr>(&NativePtr->Ctx);
-        public ref Vector2 MousePos => ref Unsafe.AsRef<Vector2>(&NativePtr->MousePos);
+        public bool WantCaptureMouse
+        {
+            get => NativePtr->WantCaptureMouse != 0;
+            set => NativePtr->WantCaptureMouse = (byte)(value ? 1 : 0);
+        }
+        public bool WantCaptureKeyboard
+        {
+            get => NativePtr->WantCaptureKeyboard != 0;
+            set => NativePtr->WantCaptureKeyboard = (byte)(value ? 1 : 0);
+        }
+        public bool WantTextInput
+        {
+            get => NativePtr->WantTextInput != 0;
+            set => NativePtr->WantTextInput = (byte)(value ? 1 : 0);
+        }
+        public bool WantSetMousePos
+        {
+            get => NativePtr->WantSetMousePos != 0;
+            set => NativePtr->WantSetMousePos = (byte)(value ? 1 : 0);
+        }
+        public bool WantSaveIniSettings
+        {
+            get => NativePtr->WantSaveIniSettings != 0;
+            set => NativePtr->WantSaveIniSettings = (byte)(value ? 1 : 0);
+        }
+        public bool NavActive
+        {
+            get => NativePtr->NavActive != 0;
+            set => NativePtr->NavActive = (byte)(value ? 1 : 0);
+        }
+        public bool NavVisible
+        {
+            get => NativePtr->NavVisible != 0;
+            set => NativePtr->NavVisible = (byte)(value ? 1 : 0);
+        }
+        public ref float Framerate => ref NativePtr->Framerate;
+        public ref int MetricsRenderVertices => ref NativePtr->MetricsRenderVertices;
+        public ref int MetricsRenderIndices => ref NativePtr->MetricsRenderIndices;
+        public ref int MetricsRenderWindows => ref NativePtr->MetricsRenderWindows;
+        public ref int MetricsActiveWindows => ref NativePtr->MetricsActiveWindows;
+        public ref Vector2 MouseDelta => ref NativePtr->MouseDelta;
+        public ref IntPtr Ctx => ref NativePtr->Ctx;
+        public ref Vector2 MousePos => ref NativePtr->MousePos;
         public RangeAccessor<bool> MouseDown => new RangeAccessor<bool>(NativePtr->MouseDown, 5);
-        public ref float MouseWheel => ref Unsafe.AsRef<float>(&NativePtr->MouseWheel);
-        public ref float MouseWheelH => ref Unsafe.AsRef<float>(&NativePtr->MouseWheelH);
-        public ref ImGuiMouseSource MouseSource => ref Unsafe.AsRef<ImGuiMouseSource>(&NativePtr->MouseSource);
-        public ref uint MouseHoveredViewport => ref Unsafe.AsRef<uint>(&NativePtr->MouseHoveredViewport);
-        public ref bool KeyCtrl => ref Unsafe.AsRef<bool>(&NativePtr->KeyCtrl);
-        public ref bool KeyShift => ref Unsafe.AsRef<bool>(&NativePtr->KeyShift);
-        public ref bool KeyAlt => ref Unsafe.AsRef<bool>(&NativePtr->KeyAlt);
-        public ref bool KeySuper => ref Unsafe.AsRef<bool>(&NativePtr->KeySuper);
-        public ref ImGuiKey KeyMods => ref Unsafe.AsRef<ImGuiKey>(&NativePtr->KeyMods);
+        public ref float MouseWheel => ref NativePtr->MouseWheel;
+        public ref float MouseWheelH => ref NativePtr->MouseWheelH;
+        public ref ImGuiMouseSource MouseSource => ref NativePtr->MouseSource;
+        public ref uint MouseHoveredViewport => ref NativePtr->MouseHoveredViewport;
+        public bool KeyCtrl
+        {
+            get => NativePtr->KeyCtrl != 0;
+            set => NativePtr->KeyCtrl = (byte)(value ? 1 : 0);
+        }
+        public bool KeyShift
+        {
+            get => NativePtr->KeyShift != 0;
+            set => NativePtr->KeyShift = (byte)(value ? 1 : 0);
+        }
+        public bool KeyAlt
+        {
+            get => NativePtr->KeyAlt != 0;
+            set => NativePtr->KeyAlt = (byte)(value ? 1 : 0);
+        }
+        public bool KeySuper
+        {
+            get => NativePtr->KeySuper != 0;
+            set => NativePtr->KeySuper = (byte)(value ? 1 : 0);
+        }
+        public ref ImGuiKey KeyMods => ref NativePtr->KeyMods;
         public RangeAccessor<ImGuiKeyData> KeysData => new RangeAccessor<ImGuiKeyData>(&NativePtr->KeysData_0, 154);
-        public ref bool WantCaptureMouseUnlessPopupClose => ref Unsafe.AsRef<bool>(&NativePtr->WantCaptureMouseUnlessPopupClose);
-        public ref Vector2 MousePosPrev => ref Unsafe.AsRef<Vector2>(&NativePtr->MousePosPrev);
+        public bool WantCaptureMouseUnlessPopupClose
+        {
+            get => NativePtr->WantCaptureMouseUnlessPopupClose != 0;
+            set => NativePtr->WantCaptureMouseUnlessPopupClose = (byte)(value ? 1 : 0);
+        }
+        public ref Vector2 MousePosPrev => ref NativePtr->MousePosPrev;
         public RangeAccessor<Vector2> MouseClickedPos => new RangeAccessor<Vector2>(&NativePtr->MouseClickedPos_0, 5);
         public RangeAccessor<double> MouseClickedTime => new RangeAccessor<double>(NativePtr->MouseClickedTime, 5);
         public RangeAccessor<bool> MouseClicked => new RangeAccessor<bool>(NativePtr->MouseClicked, 5);
@@ -380,16 +567,32 @@ namespace ImGuiNET
         public RangeAccessor<bool> MouseReleased => new RangeAccessor<bool>(NativePtr->MouseReleased, 5);
         public RangeAccessor<bool> MouseDownOwned => new RangeAccessor<bool>(NativePtr->MouseDownOwned, 5);
         public RangeAccessor<bool> MouseDownOwnedUnlessPopupClose => new RangeAccessor<bool>(NativePtr->MouseDownOwnedUnlessPopupClose, 5);
-        public ref bool MouseWheelRequestAxisSwap => ref Unsafe.AsRef<bool>(&NativePtr->MouseWheelRequestAxisSwap);
-        public ref bool MouseCtrlLeftAsRightClick => ref Unsafe.AsRef<bool>(&NativePtr->MouseCtrlLeftAsRightClick);
+        public bool MouseWheelRequestAxisSwap
+        {
+            get => NativePtr->MouseWheelRequestAxisSwap != 0;
+            set => NativePtr->MouseWheelRequestAxisSwap = (byte)(value ? 1 : 0);
+        }
+        public bool MouseCtrlLeftAsRightClick
+        {
+            get => NativePtr->MouseCtrlLeftAsRightClick != 0;
+            set => NativePtr->MouseCtrlLeftAsRightClick = (byte)(value ? 1 : 0);
+        }
         public RangeAccessor<float> MouseDownDuration => new RangeAccessor<float>(NativePtr->MouseDownDuration, 5);
         public RangeAccessor<float> MouseDownDurationPrev => new RangeAccessor<float>(NativePtr->MouseDownDurationPrev, 5);
         public RangeAccessor<Vector2> MouseDragMaxDistanceAbs => new RangeAccessor<Vector2>(&NativePtr->MouseDragMaxDistanceAbs_0, 5);
         public RangeAccessor<float> MouseDragMaxDistanceSqr => new RangeAccessor<float>(NativePtr->MouseDragMaxDistanceSqr, 5);
-        public ref float PenPressure => ref Unsafe.AsRef<float>(&NativePtr->PenPressure);
-        public ref bool AppFocusLost => ref Unsafe.AsRef<bool>(&NativePtr->AppFocusLost);
-        public ref bool AppAcceptingEvents => ref Unsafe.AsRef<bool>(&NativePtr->AppAcceptingEvents);
-        public ref ushort InputQueueSurrogate => ref Unsafe.AsRef<ushort>(&NativePtr->InputQueueSurrogate);
+        public ref float PenPressure => ref NativePtr->PenPressure;
+        public bool AppFocusLost
+        {
+            get => NativePtr->AppFocusLost != 0;
+            set => NativePtr->AppFocusLost = (byte)(value ? 1 : 0);
+        }
+        public bool AppAcceptingEvents
+        {
+            get => NativePtr->AppAcceptingEvents != 0;
+            set => NativePtr->AppAcceptingEvents = (byte)(value ? 1 : 0);
+        }
+        public ref ushort InputQueueSurrogate => ref NativePtr->InputQueueSurrogate;
         public ImVector<ushort> InputQueueCharacters => new ImVector<ushort>(NativePtr->InputQueueCharacters);
         public void AddFocusEvent(bool focused)
         {

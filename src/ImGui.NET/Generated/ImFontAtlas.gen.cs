@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -101,28 +101,48 @@ namespace ImGuiNET
         public static implicit operator ImFontAtlasPtr(ImFontAtlas* nativePtr) => new ImFontAtlasPtr(nativePtr);
         public static implicit operator ImFontAtlas* (ImFontAtlasPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImFontAtlasPtr(IntPtr nativePtr) => new ImFontAtlasPtr(nativePtr);
-        public ref ImFontAtlasFlags Flags => ref Unsafe.AsRef<ImFontAtlasFlags>(&NativePtr->Flags);
-        public ref IntPtr TexID => ref Unsafe.AsRef<IntPtr>(&NativePtr->TexID);
-        public ref int TexDesiredWidth => ref Unsafe.AsRef<int>(&NativePtr->TexDesiredWidth);
-        public ref int TexGlyphPadding => ref Unsafe.AsRef<int>(&NativePtr->TexGlyphPadding);
-        public ref bool Locked => ref Unsafe.AsRef<bool>(&NativePtr->Locked);
-        public IntPtr UserData { get => (IntPtr)NativePtr->UserData; set => NativePtr->UserData = (void*)value; }
-        public ref bool TexReady => ref Unsafe.AsRef<bool>(&NativePtr->TexReady);
-        public ref bool TexPixelsUseColors => ref Unsafe.AsRef<bool>(&NativePtr->TexPixelsUseColors);
+        public ref ImFontAtlasFlags Flags => ref NativePtr->Flags;
+        public ref IntPtr TexID => ref NativePtr->TexID;
+        public ref int TexDesiredWidth => ref NativePtr->TexDesiredWidth;
+        public ref int TexGlyphPadding => ref NativePtr->TexGlyphPadding;
+        public bool Locked
+        {
+            get => NativePtr->Locked != 0;
+            set => NativePtr->Locked = (byte)(value ? 1 : 0);
+        }
+
+        public IntPtr UserData
+        {
+            get => (IntPtr)NativePtr->UserData;
+            set => NativePtr->UserData = (void*)value;
+        }
+
+        public bool TexReady
+        {
+            get => NativePtr->TexReady != 0;
+            set => NativePtr->TexReady = (byte)(value ? 1 : 0);
+        }
+
+        public bool TexPixelsUseColors
+        {
+            get => NativePtr->TexPixelsUseColors != 0;
+            set => NativePtr->TexPixelsUseColors = (byte)(value ? 1 : 0);
+        }
+
         public IntPtr TexPixelsAlpha8 { get => (IntPtr)NativePtr->TexPixelsAlpha8; set => NativePtr->TexPixelsAlpha8 = (byte*)value; }
         public IntPtr TexPixelsRGBA32 { get => (IntPtr)NativePtr->TexPixelsRGBA32; set => NativePtr->TexPixelsRGBA32 = (uint*)value; }
-        public ref int TexWidth => ref Unsafe.AsRef<int>(&NativePtr->TexWidth);
-        public ref int TexHeight => ref Unsafe.AsRef<int>(&NativePtr->TexHeight);
-        public ref Vector2 TexUvScale => ref Unsafe.AsRef<Vector2>(&NativePtr->TexUvScale);
-        public ref Vector2 TexUvWhitePixel => ref Unsafe.AsRef<Vector2>(&NativePtr->TexUvWhitePixel);
+        public ref int TexWidth => ref NativePtr->TexWidth;
+        public ref int TexHeight => ref NativePtr->TexHeight;
+        public ref Vector2 TexUvScale => ref NativePtr->TexUvScale;
+        public ref Vector2 TexUvWhitePixel => ref NativePtr->TexUvWhitePixel;
         public ImVector<ImFontPtr> Fonts => new ImVector<ImFontPtr>(NativePtr->Fonts);
-        public ImPtrVector<ImFontAtlasCustomRectPtr> CustomRects => new ImPtrVector<ImFontAtlasCustomRectPtr>(NativePtr->CustomRects, Unsafe.SizeOf<ImFontAtlasCustomRect>());
-        public ImPtrVector<ImFontConfigPtr> ConfigData => new ImPtrVector<ImFontConfigPtr>(NativePtr->ConfigData, Unsafe.SizeOf<ImFontConfig>());
+        public ImPtrVector<ImFontAtlasCustomRectPtr> CustomRects => new ImPtrVector<ImFontAtlasCustomRectPtr>(NativePtr->CustomRects, sizeof(ImFontAtlasCustomRect));
+        public ImPtrVector<ImFontConfigPtr> ConfigData => new ImPtrVector<ImFontConfigPtr>(NativePtr->ConfigData, sizeof(ImFontConfig));
         public RangeAccessor<Vector4> TexUvLines => new RangeAccessor<Vector4>(&NativePtr->TexUvLines_0, 64);
         public IntPtr FontBuilderIO { get => (IntPtr)NativePtr->FontBuilderIO; set => NativePtr->FontBuilderIO = (IntPtr*)value; }
-        public ref uint FontBuilderFlags => ref Unsafe.AsRef<uint>(&NativePtr->FontBuilderFlags);
-        public ref int PackIdMouseCursors => ref Unsafe.AsRef<int>(&NativePtr->PackIdMouseCursors);
-        public ref int PackIdLines => ref Unsafe.AsRef<int>(&NativePtr->PackIdLines);
+        public ref uint FontBuilderFlags => ref NativePtr->FontBuilderFlags;
+        public ref int PackIdMouseCursors => ref NativePtr->PackIdMouseCursors;
+        public ref int PackIdLines => ref NativePtr->PackIdLines;
         public int AddCustomRectFontGlyph(ImFontPtr font, ushort id, int width, int height, float advance_x)
         {
             ImFont* native_font = font.NativePtr;

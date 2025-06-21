@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -19,9 +19,9 @@ namespace ImGuiNET
         public static implicit operator ImDrawListSplitterPtr(ImDrawListSplitter* nativePtr) => new ImDrawListSplitterPtr(nativePtr);
         public static implicit operator ImDrawListSplitter* (ImDrawListSplitterPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImDrawListSplitterPtr(IntPtr nativePtr) => new ImDrawListSplitterPtr(nativePtr);
-        public ref int _Current => ref Unsafe.AsRef<int>(&NativePtr->_Current);
-        public ref int _Count => ref Unsafe.AsRef<int>(&NativePtr->_Count);
-        public ImPtrVector<ImDrawChannelPtr> _Channels => new ImPtrVector<ImDrawChannelPtr>(NativePtr->_Channels, Unsafe.SizeOf<ImDrawChannel>());
+        public ref int _Current => ref NativePtr->_Current;
+        public ref int _Count => ref NativePtr->_Count;
+        public ImPtrVector<ImDrawChannelPtr> _Channels => new ImPtrVector<ImDrawChannelPtr>(NativePtr->_Channels, sizeof(ImDrawChannel));
         public void Clear()
         {
             ImGuiNative.ImDrawListSplitter_Clear((ImDrawListSplitter*)(NativePtr));

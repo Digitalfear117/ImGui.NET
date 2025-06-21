@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -25,15 +25,23 @@ namespace ImGuiNET
         public static implicit operator ImGuiWindowClassPtr(ImGuiWindowClass* nativePtr) => new ImGuiWindowClassPtr(nativePtr);
         public static implicit operator ImGuiWindowClass* (ImGuiWindowClassPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiWindowClassPtr(IntPtr nativePtr) => new ImGuiWindowClassPtr(nativePtr);
-        public ref uint ClassId => ref Unsafe.AsRef<uint>(&NativePtr->ClassId);
-        public ref uint ParentViewportId => ref Unsafe.AsRef<uint>(&NativePtr->ParentViewportId);
-        public ref uint FocusRouteParentWindowId => ref Unsafe.AsRef<uint>(&NativePtr->FocusRouteParentWindowId);
-        public ref ImGuiViewportFlags ViewportFlagsOverrideSet => ref Unsafe.AsRef<ImGuiViewportFlags>(&NativePtr->ViewportFlagsOverrideSet);
-        public ref ImGuiViewportFlags ViewportFlagsOverrideClear => ref Unsafe.AsRef<ImGuiViewportFlags>(&NativePtr->ViewportFlagsOverrideClear);
-        public ref ImGuiTabItemFlags TabItemFlagsOverrideSet => ref Unsafe.AsRef<ImGuiTabItemFlags>(&NativePtr->TabItemFlagsOverrideSet);
-        public ref ImGuiDockNodeFlags DockNodeFlagsOverrideSet => ref Unsafe.AsRef<ImGuiDockNodeFlags>(&NativePtr->DockNodeFlagsOverrideSet);
-        public ref bool DockingAlwaysTabBar => ref Unsafe.AsRef<bool>(&NativePtr->DockingAlwaysTabBar);
-        public ref bool DockingAllowUnclassed => ref Unsafe.AsRef<bool>(&NativePtr->DockingAllowUnclassed);
+        public ref uint ClassId => ref NativePtr->ClassId;
+        public ref uint ParentViewportId => ref NativePtr->ParentViewportId;
+        public ref uint FocusRouteParentWindowId => ref NativePtr->FocusRouteParentWindowId;
+        public ref ImGuiViewportFlags ViewportFlagsOverrideSet => ref NativePtr->ViewportFlagsOverrideSet;
+        public ref ImGuiViewportFlags ViewportFlagsOverrideClear => ref NativePtr->ViewportFlagsOverrideClear;
+        public ref ImGuiTabItemFlags TabItemFlagsOverrideSet => ref NativePtr->TabItemFlagsOverrideSet;
+        public ref ImGuiDockNodeFlags DockNodeFlagsOverrideSet => ref NativePtr->DockNodeFlagsOverrideSet;
+        public bool DockingAlwaysTabBar
+        {
+            get => NativePtr->DockingAlwaysTabBar != 0;
+            set => NativePtr->DockingAlwaysTabBar = (byte)(value ? 1 : 0);
+        }
+        public bool DockingAllowUnclassed
+        {
+            get => NativePtr->DockingAllowUnclassed != 0;
+            set => NativePtr->DockingAllowUnclassed = (byte)(value ? 1 : 0);
+        }
         public void Destroy()
         {
             ImGuiNative.ImGuiWindowClass_destroy((ImGuiWindowClass*)(NativePtr));

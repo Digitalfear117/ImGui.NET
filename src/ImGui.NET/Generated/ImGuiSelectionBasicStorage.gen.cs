@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -22,12 +22,16 @@ namespace ImGuiNET
         public static implicit operator ImGuiSelectionBasicStoragePtr(ImGuiSelectionBasicStorage* nativePtr) => new ImGuiSelectionBasicStoragePtr(nativePtr);
         public static implicit operator ImGuiSelectionBasicStorage* (ImGuiSelectionBasicStoragePtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiSelectionBasicStoragePtr(IntPtr nativePtr) => new ImGuiSelectionBasicStoragePtr(nativePtr);
-        public ref int Size => ref Unsafe.AsRef<int>(&NativePtr->Size);
-        public ref bool PreserveOrder => ref Unsafe.AsRef<bool>(&NativePtr->PreserveOrder);
+        public ref int Size => ref NativePtr->Size;
+        public bool PreserveOrder
+        {
+            get => NativePtr->PreserveOrder != 0;
+            set => NativePtr->PreserveOrder = (byte)(value ? 1 : 0);
+        }
         public IntPtr UserData { get => (IntPtr)NativePtr->UserData; set => NativePtr->UserData = (void*)value; }
-        public ref IntPtr AdapterIndexToStorageId => ref Unsafe.AsRef<IntPtr>(&NativePtr->AdapterIndexToStorageId);
-        public ref int _SelectionOrder => ref Unsafe.AsRef<int>(&NativePtr->_SelectionOrder);
-        public ref ImGuiStorage _Storage => ref Unsafe.AsRef<ImGuiStorage>(&NativePtr->_Storage);
+        public ref IntPtr AdapterIndexToStorageId => ref NativePtr->AdapterIndexToStorageId;
+        public ref int _SelectionOrder => ref NativePtr->_SelectionOrder;
+        public ref ImGuiStorage _Storage => ref NativePtr->_Storage;
         public void ApplyRequests(ImGuiMultiSelectIOPtr ms_io)
         {
             ImGuiMultiSelectIO* native_ms_io = ms_io.NativePtr;

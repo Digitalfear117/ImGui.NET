@@ -1,5 +1,5 @@
 using System;
-using System.Numerics;
+using SlimDX;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -29,19 +29,24 @@ namespace ImGuiNET
         public static implicit operator ImGuiInputTextCallbackDataPtr(ImGuiInputTextCallbackData* nativePtr) => new ImGuiInputTextCallbackDataPtr(nativePtr);
         public static implicit operator ImGuiInputTextCallbackData* (ImGuiInputTextCallbackDataPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiInputTextCallbackDataPtr(IntPtr nativePtr) => new ImGuiInputTextCallbackDataPtr(nativePtr);
-        public ref IntPtr Ctx => ref Unsafe.AsRef<IntPtr>(&NativePtr->Ctx);
-        public ref ImGuiInputTextFlags EventFlag => ref Unsafe.AsRef<ImGuiInputTextFlags>(&NativePtr->EventFlag);
-        public ref ImGuiInputTextFlags Flags => ref Unsafe.AsRef<ImGuiInputTextFlags>(&NativePtr->Flags);
+        public ref IntPtr Ctx => ref NativePtr->Ctx;
+        public ref ImGuiInputTextFlags EventFlag => ref NativePtr->EventFlag;
+        public ref ImGuiInputTextFlags Flags => ref NativePtr->Flags;
         public IntPtr UserData { get => (IntPtr)NativePtr->UserData; set => NativePtr->UserData = (void*)value; }
-        public ref ushort EventChar => ref Unsafe.AsRef<ushort>(&NativePtr->EventChar);
-        public ref ImGuiKey EventKey => ref Unsafe.AsRef<ImGuiKey>(&NativePtr->EventKey);
+        public ref ushort EventChar => ref NativePtr->EventChar;
+        public ref ImGuiKey EventKey => ref NativePtr->EventKey;
         public IntPtr Buf { get => (IntPtr)NativePtr->Buf; set => NativePtr->Buf = (byte*)value; }
-        public ref int BufTextLen => ref Unsafe.AsRef<int>(&NativePtr->BufTextLen);
-        public ref int BufSize => ref Unsafe.AsRef<int>(&NativePtr->BufSize);
-        public ref bool BufDirty => ref Unsafe.AsRef<bool>(&NativePtr->BufDirty);
-        public ref int CursorPos => ref Unsafe.AsRef<int>(&NativePtr->CursorPos);
-        public ref int SelectionStart => ref Unsafe.AsRef<int>(&NativePtr->SelectionStart);
-        public ref int SelectionEnd => ref Unsafe.AsRef<int>(&NativePtr->SelectionEnd);
+        public ref int BufTextLen => ref NativePtr->BufTextLen;
+        public ref int BufSize => ref NativePtr->BufSize;
+        public bool BufDirty
+        {
+            get => NativePtr->BufDirty != 0;
+            set => NativePtr->BufDirty = (byte)(value ? 1 : 0);
+        }
+
+        public ref int CursorPos => ref NativePtr->CursorPos;
+        public ref int SelectionStart => ref NativePtr->SelectionStart;
+        public ref int SelectionEnd => ref NativePtr->SelectionEnd;
         public void ClearSelection()
         {
             ImGuiNative.ImGuiInputTextCallbackData_ClearSelection((ImGuiInputTextCallbackData*)(NativePtr));
